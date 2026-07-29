@@ -1,0 +1,61 @@
+export type GibUnit = {
+  value: string;
+  label: string;
+};
+
+export const GIB_UNITS: GibUnit[] = [
+  { value: "DAY", label: "Gün" },
+  { value: "MON", label: "Ay" },
+  { value: "ANN", label: "Yıl" },
+  { value: "HUR", label: "Saat" },
+  { value: "D61", label: "Dakika" },
+  { value: "D62", label: "Saniye" },
+  { value: "C62", label: "Adet" },
+  { value: "PA", label: "Paket" },
+  { value: "BX", label: "Kutu" },
+  { value: "MGM", label: "mg" },
+  { value: "GRM", label: "g" },
+  { value: "KGM", label: "kg" },
+  { value: "LTR", label: "lt" },
+  { value: "TNE", label: "ton" },
+  { value: "NT", label: "Net Ton" },
+  { value: "GT", label: "Gross ton" },
+  { value: "MMT", label: "mm" },
+  { value: "CMT", label: "cm" },
+  { value: "MTR", label: "m" },
+  { value: "KTM", label: "km" },
+  { value: "MLT", label: "ml" },
+  { value: "MMQ", label: "mm3" },
+  { value: "CMK", label: "cm2" },
+  { value: "CMQ", label: "cm3" },
+  { value: "MTK", label: "m2" },
+  { value: "MTQ", label: "m3" },
+  { value: "KJO", label: "kJ" },
+  { value: "CLT", label: "cl" },
+  { value: "CT", label: "KARAT" },
+  { value: "KWH", label: "KWH" },
+  { value: "MWH", label: "MWH" },
+  { value: "CCT", label: "Ton baş.taşıma kap." },
+  { value: "D30", label: "Brüt kalori" },
+  { value: "D40", label: "1000 lt" },
+  { value: "LPA", label: "Saf alkol lt" },
+  { value: "B32", label: "kg.m2" },
+  { value: "NCL", label: "Hücre adet" },
+  { value: "PR", label: "Çift" },
+  { value: "R9", label: "1000 m3" },
+  { value: "SET", label: "Set" },
+  { value: "T3", label: "1000 adet" },
+  { value: "Q37", label: "SCM" },
+  { value: "Q39", label: "NCM" },
+  { value: "J39", label: "mmBTU" },
+  { value: "G52", label: "CM³" },
+  { value: "DZN", label: "Düzine" },
+  { value: "DMK", label: "dm2" },
+  { value: "DMT", label: "dm" },
+  { value: "HAR", label: "ha" },
+  { value: "LM", label: "Metretül (LM)" },
+];
+
+export function getGibUnitLabel(value: string) {
+  return GIB_UNITS.find((item) => item.value === value)?.label ?? "Adet";
+}

@@ -1,0 +1,42 @@
+Bu adımdan sonra artık sms ile onay işlemine geçebilirim. 
+Onun öncesinde belki ui da güzelleştirmeler ve birtakım mimarisel 
+düzenlemeler yapılabilir. Daha sonra  apple için olan kısmına bakabilriz.
+
+
+Kişileri doğrudan Google Drive’a  kaydetme
+
+Bu da yapılabilir. Bunun için Google hesabı ile giriş ve Google Drive API gerekir. 
+Google Drive API ile dosya oluşturma ve dosya yükleme destekleniyor; files.create ile dosya oluşturulabiliyor, 
+upload endpoint’i ile içerik yüklenebiliyor.
+
+Daha temiz yöntem, kullanıcıların Drive’ında görünmeyen uygulamaya özel alana kaydetmek olabilir:
+
+```Google Drive appDataFolder```
+
+Google’ın dokümanına göre uygulamaya özel veri klasörüne dosya oluşturmak için parents alanında appDataFolder veriliyor; `
+arama için de spaces=appDataFolder kullanılıyor.
+
+Bu yaklaşımın artıları:
+
+- Android ve iOS’ta ortak çalışabilir.
+- Kullanıcının Drive’ında uygulamaya özel gizli yedek alanı oluşur.
+- Cihaz değiştirince geri yükleme yapılabilir.
+
+Eksileri:
+
+- Google OAuth kurulumu gerekir.
+- Drive API izinleri gerekir.
+- Token yenileme, bağlantı hatası, çakışma yönetimi gerekir.
+- Uygulama mağazası sürecinde gizlilik açıklamaları daha önemli hale gelir.
+
+Expo tarafında Google kimlik doğrulaması için güncel önerilerde react-native-nitro-google-signin veya 
+@react-native-google-signin/google-signin gibi paketlerle Expo projesinde Google authentication kurulumu anlatılıyor.
+
+Claude's advises:
+4. Özellik fikirleri (steps.txt'deki planına ek olarak)
+Bildirim: Yeni fatura/onay durumu değiştiğinde push notification (arka planda periyodik kontrol + local notification, ya da GİB tarafında webhook yoksa polling).
+Fatura arama/filtreleme: alıcı VKN'sine, tutara, duruma göre.
+Basit dashboard: seçilen dönem için toplam KDV, toplam tutar, fatura sayısı gibi özet kartlar — muhasebe kullanıcıları için değerli.
+Çoklu firma/kullanıcı desteği: mükellefler birden fazla firma için giriş yapıyorsa, hızlı hesap değiştirme.
+Taslak şablonları: sık kullanılan alıcı/kalem bilgilerini şablon olarak kaydetme.
+Google Drive fikrin (steps.txt'de) iyi ama iOS/Android ortak "appDataFolder" yaklaşımı doğru — bunu asıl kimlik doğrulama akışına (Apple Sign-In zorunluluğu: Google girişi sunuyorsan Apple'da "Sign in with Apple" seçeneğini de sunman gerekebilir, App Store kuralı) dikkat ederek kurgula.

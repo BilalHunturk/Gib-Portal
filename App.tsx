@@ -3,23 +3,17 @@ import { StatusBar } from "expo-status-bar";
 import { View, ActivityIndicator, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-import { LoginScreen } from "./src/screens/LoginScreen";
-import { InvoiceListScreen } from "./src/screens/InvoiceListScreen";
-// import { CreateDraftTestScreen } from "./src/screens/CreateDraftTestScreen";
-import { InvoiceDraftScreen } from "./src/screens/InvoiceDraftScreen";
-import { GibService } from "./src/services/gib";
+import { AppNavigator } from "./src/navigation/AppNavigator";
+import { GibService } from "./src/services/gibService";
 
 const REMEMBER_KEY = "gib_remember_me";
 const USERNAME_KEY = "gib_username";
 const PASSWORD_KEY = "gib_password";
 
-type AppScreen = "list" | "draft";
-
 export default function App() {
   const gib = useMemo(() => new GibService(), []);
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [screen, setScreen] = useState<AppScreen>("list");
   const [loading, setLoading] = useState(true);
   const [autoLoginFailed, setAutoLoginFailed] = useState(false);
 
@@ -39,7 +33,6 @@ export default function App() {
           try {
             await gib.login(savedUsername, savedPassword);
             setLoggedIn(true);
-            setScreen("list");
             return;
           } catch {
             setAutoLoginFailed(true);
@@ -56,13 +49,11 @@ export default function App() {
   function handleLoggedIn() {
     setLoggedIn(true);
     setAutoLoginFailed(false);
-    setScreen("list");
   }
 
   function handleLogout() {
     setLoggedIn(false);
     setAutoLoginFailed(false);
-    setScreen("list");
   }
 
   if (loading) {
@@ -86,38 +77,15 @@ export default function App() {
     );
   }
 
-  if (!loggedIn) {
-    return (
-      <>
-        <StatusBar style="dark" />
-        <LoginScreen
-          gib={gib}
-          onLoggedIn={handleLoggedIn}
-          autoLoginFailed={autoLoginFailed}
-        />
-      </>
-    );
-  }
-
-  if (screen === "draft") {
-    return (
-      <>
-        <StatusBar style="dark" />
-        <InvoiceDraftScreen
-          gib={gib}
-          onBack={() => setScreen("list")}
-        />
-      </>
-    );
-  }
-
   return (
     <>
       <StatusBar style="dark" />
-      <InvoiceListScreen
+      <AppNavigator
         gib={gib}
+        loggedIn={loggedIn}
+        autoLoginFailed={autoLoginFailed}
+        onLoggedIn={handleLoggedIn}
         onLogout={handleLogout}
-        onCreateDraft={() => setScreen("draft")}
       />
     </>
   );
